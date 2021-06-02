@@ -41,6 +41,7 @@ def fetch(url,d,original_text):
 # Create your views here.
 
 def scan(request):
+    print('This is a view')
     x = datetime.datetime.now()
     data={}
     data['urls']=[]

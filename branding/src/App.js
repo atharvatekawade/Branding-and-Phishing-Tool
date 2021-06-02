@@ -1,37 +1,40 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { Route } from "react-router-dom";
-import Header from "./Components/Header";
-import Home from "./Screens/Home";
-import HomeScreen from "./Screens/HomeScreen";
-import Phising from "./Screens/Phising";
-import Report from "./Screens/Report";
+//import Header from "./Components/Header";
+import Similarity from "./Components/Similarity";
+import Monitoring from "./Components/Monitoring";
+import Phising from "./Components/Phising";
+import Report from "./Components/Report";
+import Home from "./Components/Home";
 
 const App = () => {
   return (
-    <>
-       <Header/>
+    <div>
       <main className="py-3">
+          <Route exact path="/" exact>
+            <Home />
+          </Route>
   
-          <Route path="/monitoring" exact>
-            <HomeScreen/>
+          <Route exact path="/monitoring" exact>
+            <Monitoring/>
           </Route>
 
-          <Route path="/phising" exact>
+          <Route exact path="/phishing" exact>
             <Phising/>
           </Route>
 
-          <Route path="/similarity" exact>
-            <Home/>
+          <Route exact path="/similarity" exact>
+            <Similarity/>
           </Route>
 
-          <Route path="/reporting" exact>
+          <Route exact path="/reporting" exact>
             <Report/>
           </Route>
          
-          </main>
+        </main>
 
-    </>
+    </div>
   );
 };
 

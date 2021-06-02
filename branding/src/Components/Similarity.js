@@ -4,7 +4,7 @@ import ReactLoading from 'react-loading';
 import Header from '../Components/Header'
 import axios from "axios"
 
-const Home = () => {
+const Similarity = () => {
 
     const [url1,setUrl1]=useState("");
     const [url2,setUrl2]=useState("");
@@ -68,4 +68,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Similarity

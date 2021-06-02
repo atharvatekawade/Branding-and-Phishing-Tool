@@ -3,7 +3,7 @@ import { Button, Container, FormControl, InputGroup, Pagination, ProgressBar, Sp
 import ReactLoading from 'react-loading';
 import axios from "axios";
 
-const HomeScreen = () => {
+const Monitoring = () => {
   const [active, setActive] = useState(1);
   const [num, setNum] = useState(1);
   const [loading, setLoading] = useState(0);
@@ -119,4 +119,4 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
+export default Monitoring
