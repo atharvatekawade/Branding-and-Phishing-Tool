@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, FormControl, InputGroup, Pagination, ProgressBar, Spinner, Table,Card } from 'react-bootstrap'
+import { Button,  Container, Table,Alert, Form } from 'react-bootstrap'
 import ReactLoading from 'react-loading';
 import axios from "axios";
 
@@ -61,38 +61,25 @@ const Phising = () => {
     )
   };
 
-
     return (
-        <div style={{padding:"20px"}}>
-          <Card>
-          <Card.Body><h3><p>This module is used for detecting if a URL is a phishing site. Enter the URL and hit Detect. It will tell you if the URL is safe or not. If not, it will also give you a list of ten suggested URLS. You can only use this module for a maximum of five times per day.</p></h3></Card.Body>
-            </Card>
-            <br />
-    <InputGroup className="mb-3">
-    <InputGroup.Prepend>
-      <InputGroup.Text id="inputGroup-sizing-default" style={{width:"10vw"}}>URL:</InputGroup.Text>
-    </InputGroup.Prepend>
-    <FormControl
-      aria-label="Default"
-      aria-describedby="inputGroup-sizing-default"
-      onChange={(e)=>setUrl(e.target.value)}
-    />
-     <InputGroup.Append >
-      {/* CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE---><Button variant="outline-dark" onClick={fetchData()}>Compute</Button>   */}
-      <Button variant="outline-dark" onClick={fetchData}>Detect</Button> 
-    </InputGroup.Append>
-  </InputGroup>
-
- <br/>
- {loading>0?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
- <br />
-  
-    {datas && datas.suggested_urls && datas.suggested_urls.length>0 && !err && datas.err==0 && datas.exceed==0?ItemOfTable():null}
-    {datas && datas.suggested_urls && datas.suggested_urls.length==0 && !err && datas.err==0 && datas.exceed==0?<h2>This is not a phising site!!</h2>:null}
-    {datas && datas.err==1?<h2>Some error occured!!</h2>:null}
-    {datas && datas.exceed==1?<h2>Request Limit exceeded!!</h2>:null}
-    {err?<h2>Some error occured!!</h2>:null}
-    </div>
+      <Container className='mt-5'>
+        {loading>0?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
+        <Form className='mt-4 form pt-5 pb-3 px-4'>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label><b>URL</b></Form.Label>
+          <Form.Control type="email" placeholder="Enter site" onChange={(e)=>setUrl(e.target.value)} />
+        </Form.Group>
+        <Button variant="primary" onClick={fetchData} className='mt-3'>
+          Report
+        </Button>
+      </Form>
+      <br />
+      {datas && datas.suggested_urls && datas.suggested_urls.length>0 && !err && datas.err==0 && datas.exceed==0?ItemOfTable():null}
+      {datas && datas.suggested_urls && datas.suggested_urls.length==0 && !err && datas.err==0 && datas.exceed==0?<h5><Alert variant='success' className='py-4'>This is not a phishing site</Alert></h5>:null}
+      {datas && datas.err==1?<h5><Alert variant='danger' className='py-4'>Some Error occured</Alert></h5>:null}
+      {datas && datas.exceed==1?<h5><Alert variant='primary' className='py-4'>Request Limit Exceeded</Alert></h5>:null}
+      {err?<h2>Some error occured!!</h2>:null}
+    </Container>
     )
 }
 

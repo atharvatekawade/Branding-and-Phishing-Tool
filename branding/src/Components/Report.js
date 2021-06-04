@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, FormControl, InputGroup, Pagination, ProgressBar, Spinner, Table,Card } from 'react-bootstrap'
+import { Container,Form,Button,Alert } from 'react-bootstrap'
 import ReactLoading from 'react-loading';
 import axios from "axios";
+import './styles.css'
+
+
+/*{loading>0?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
+            <br />
+            {datas && datas.exceed==1 && !err?<h2>Already reported!!</h2>:null}
+            {datas && datas.report==1 && !err?<h2>Reported successfully</h2>:null}
+            {err?<h2>Some error occured!!</h2>:null}
+*/
 
 const Report = () => {
     const [loading, setLoading] = useState(0);
@@ -10,6 +19,7 @@ const Report = () => {
     const [datas, setData] = useState({});
 
     const fetchData=()=>{
+        console.log('Reporting')
         setLoading(1);
         const fetchAll = async () => {
           try {
@@ -33,32 +43,22 @@ const Report = () => {
     }
 
     return (
-        <div style={{padding:"20px"}}>
-            <Card>
-            <Card.Body><h3><p>This module is used for reporting a website. Enter the the URL you want to report and hit Report, it will be reported.</p></h3></Card.Body>
-            </Card>
-            <br />
-            <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-default" style={{width:"10vw"}}>URL:</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                aria-label="Default"
-                aria-describedby="inputGroup-sizing-default"
-                onChange={(e)=>setUrl(e.target.value)}
-                />
-                <InputGroup.Append >
-                {/* CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE---><Button variant="outline-dark" onClick={fetchData()}>Compute</Button>   */}
-                <Button variant="outline-dark" onClick={fetchData}>Report</Button> 
-                </InputGroup.Append>
-            </InputGroup>
-            <br/>
+        <Container className='mt-5'>
             {loading>0?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
-            <br />
-            {datas && datas.exceed==1 && !err?<h2>Already reported!!</h2>:null}
-            {datas && datas.report==1 && !err?<h2>Reported successfully</h2>:null}
-            {err?<h2>Some error occured!!</h2>:null}
-        </div>
+            {datas && datas.exceed==1 && !err?<h5><Alert variant='primary' className='py-4'>Already Reported</Alert></h5>:null}
+            {datas && datas.report==1 && !err?<h5><Alert variant='success' className='py-4'>Successfully Reported</Alert></h5>:null}
+            {err?<h5><Alert variant='danger' className='py-4'>Some Error occured</Alert></h5>:null}
+            {(datas && !(datas.report || datas.exceed)) && !err?<Alert className='invisible'>Hey</Alert>:null}
+            <Form className='mt-4 form pt-5 pb-3 px-4'>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label><b>URL</b></Form.Label>
+              <Form.Control type="text" placeholder="Enter site" onChange={(e)=>setUrl(e.target.value)} />
+            </Form.Group>
+            <Button variant="primary" onClick={fetchData} className='mt-3'>
+              Report
+            </Button>
+          </Form>
+        </Container>
     )
 }
 

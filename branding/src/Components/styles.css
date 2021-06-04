@@ -1,0 +1,18 @@
+.invisible{
+    background-color: rgba(0,0,0,0);
+    color: rgba(0,0,0,0);
+}
+
+.form {
+    background-color: rgba(12,12,12,0.05)
+}
+
+.hov{
+    cursor: default;
+}
+
+.up {
+    float: right;
+    position: relative;
+    top: -38px;
+}

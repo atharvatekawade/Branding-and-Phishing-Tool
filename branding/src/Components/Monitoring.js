@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, FormControl, InputGroup, Pagination, ProgressBar, Spinner, Table,Card } from 'react-bootstrap'
+import { Button, Container,Form,Table,Alert,Card } from 'react-bootstrap'
 import ReactLoading from 'react-loading';
 import axios from "axios";
+import Bar from './Bar'
+import './styles.css'
 
 const Monitoring = () => {
   const [active, setActive] = useState(1);
@@ -12,18 +14,6 @@ const Monitoring = () => {
   const [err,setErr]=useState(false);
   const [exceed,setExceed]=useState(0);
  
-  const items=[];
-  for (let number = 1; number <= num; number++) {
-    items.push(
-      <Pagination.Item
-        key={number}
-        active={number === active}
-        onClick={() => setActive(number)}
-      >
-        {number}
-      </Pagination.Item>
-    );
-  }
   const [datas, setData] = useState({});
 
  //CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE
@@ -55,67 +45,61 @@ const Monitoring = () => {
   const Items= () => {
     return datas.urls
       .filter((dat, index) => index >=(active-1) * 10 && index <= (active-1) * 10 + 9)
-      .map((filterData,indi) => <tr>
-      <td>{(active-1)*10+indi+1}</td>
-      <td><a>{filterData.url}</a></td>
-      <td><ProgressBar style={{height:"20px"}} striped variant="warning" now={filterData.score} animated label={`${filterData.score}%`}/></td>
-    </tr>);
+      .map((filterData,indi) =>
+        <Card key={indi}>
+          <Card.Body>
+            <b>{(active-1)*10+indi+1}.</b>
+            <a>{filterData.url}</a>
+            <Bar score={filterData.score} heigth={20} />
+          </Card.Body>
+        </Card>
+      )
   };
 
-  const ItemOfTable = () => (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>S.No</th>
-          <th>URL</th>
-          <th>Similarity</th>
-        </tr>
-      </thead>
-      <tbody><Items /></tbody>
-    </Table>
-  )
 
+    const decrement = () => {
+      setActive(active-1);
+    }
 
+    const increment = () => {
+      setActive(active+1);
+    }
 
     return (
-        <div style={{padding:"20px"}}>
-          <Card>
-          <Card.Body><h3><p>This module is used for finding all similar names out there to your website. Enter the URL you want to monitor with a threshold on similarity and hit Find. This will take several minutes as a thorough search is required. You can only use this module for a maximum of five times per day.</p></h3></Card.Body>
-            </Card>
-            <br />
-    <InputGroup className="mb-3">
-    <InputGroup.Prepend>
-      <InputGroup.Text id="inputGroup-sizing-default" style={{width:"10vw"}}>URL:</InputGroup.Text>
-    </InputGroup.Prepend>
-    <FormControl
-      aria-label="Default"
-      aria-describedby="inputGroup-sizing-default"
-      onChange={(e)=>setUrl(e.target.value)}
-    />
-     <InputGroup.Append >
-      {/* CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE CUSTOMIZE---><Button variant="outline-dark" onClick={fetchData()}>Compute</Button>   */}
-      <Button variant="outline-dark" onClick={fetchData}>Find</Button> 
-    </InputGroup.Append>
-    <InputGroup.Prepend>
-      <InputGroup.Text id="inputGroup-sizing-default" style={{width:"10vw"}}>Threshold:</InputGroup.Text>
-    </InputGroup.Prepend>
-    <FormControl
-      aria-label="Default"
-      aria-describedby="inputGroup-sizing-default"
-      onChange={(e)=>setP(e.target.value)}
-    />
-  </InputGroup>
- <br/>
- {loading>0?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
- <br />
-   {datas && datas.urls && datas.urls.length>0 && !err && datas.err==0 && datas.exceed==0?ItemOfTable():null}
-   {datas && datas.err==1?<h2>Some error occured!!</h2>:null}
-   {datas && datas.exceed==1?<h2>Request Limit exceeded!!</h2>:null}
-   {err?<h2>Some error occured!!</h2>:null}
-    <Pagination style={{ justifyContent: "center" }} size="lg" >
-        {items}
-    </Pagination>
-  </div>
+      <Container className='mt-5'>
+        <Form className='mt-4 form pt-5 pb-3 px-4'>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label><b>URL</b></Form.Label>
+              <Form.Control type="text" placeholder="Enter site" onChange={(e)=>setUrl(e.target.value)} />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label><b>Threshold</b></Form.Label>
+              <Form.Control type="text" placeholder="Enter threshold" onChange={(e)=>setP(e.target.value)} />
+            </Form.Group>
+            <Button variant="primary" onClick={fetchData} className='mt-3'>
+              Monitor
+            </Button>
+        </Form>
+        {loading>0?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
+        <br />
+        {datas && datas.urls && datas.urls.length>0 && !err && datas.err==0 && datas.exceed==0?Items():null}
+        {datas && datas.err==1?<h5><Alert variant='danger' className='py-4'>Some Error occured</Alert></h5>:null}
+        {datas && datas.exceed==1?<h5><Alert variant='primary' className='py-4'>Request Limit Exceeded</Alert></h5>:null}
+        {err?<h5><Alert variant='danger' className='py-4'>Some Error occured</Alert></h5>:null}
+        <br /><br />
+        {datas && datas.urls && datas.urls.length>0 && !err && datas.err==0 && datas.exceed==0 && active==1 && num!=1 &&
+          <div onClick={increment} className='hov'><h4>Next</h4></div>
+        }
+        {datas && datas.urls && datas.urls.length>0 && !err && datas.err==0 && datas.exceed==0 && active!=1 && active==num &&
+          <div onClick={decrement} className='hov'><h4>Prev</h4></div>
+        }
+        {datas && datas.urls && datas.urls.length>0 && !err && datas.err==0 && datas.exceed==0 && active!=1 && active!=num &&
+          <div>
+            <div onClick={decrement} className='hov'><h4>Prev</h4></div>
+            <div onClick={increment} className='hov up'><h4>Next</h4></div>
+          </div>
+        }
+      </Container>
     )
 }
 

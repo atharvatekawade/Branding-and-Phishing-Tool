@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 import { Route } from "react-router-dom";
 //import Header from "./Components/Header";
 import Similarity from "./Components/Similarity";

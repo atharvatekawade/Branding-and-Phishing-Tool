@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('scan/', include('monitoring.urls')),
     path('phis/', include('phishing.urls')),
-    path('report/', include('phishing.urls')),
+    path('report/', include('reporting.urls')),
     path('flush/<str:val>',views.flush),
     re_path('.*',views.common),
 ]

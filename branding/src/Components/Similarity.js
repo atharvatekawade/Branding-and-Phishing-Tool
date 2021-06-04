@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Form,Col, Button, ProgressBar, Spinner } from 'react-bootstrap'
+import { Card, Form,Col, Button, Alert } from 'react-bootstrap'
 import ReactLoading from 'react-loading';
-import Header from '../Components/Header'
 import axios from "axios"
+import Bar from './Bar'
 
 const Similarity = () => {
 
@@ -59,9 +59,11 @@ const Similarity = () => {
                     Compare
               </Button> */}
           </Card.Footer>
-          {datas && Object.keys(datas).length>0 && !err && datas.err==0?<ProgressBar style={{height:"30px"}} striped variant="success" now={datas.score} animated label={`${datas.score}%`}/>:null}
-          {datas && Object.keys(datas).length>0 && datas.hasOwnProperty("err") && datas.err==1?<h2>Some error occured!!</h2>:null}
-          {err?<h2>Some error occured!!</h2>:null}
+          <br />
+          {yes ?<ReactLoading type="cylon" color="blue" height={107} width={75} />:null}
+          {datas && Object.keys(datas).length>0 && !err && datas.err==0?<Bar score={datas.score} heigth={20} />:null}
+          {datas && Object.keys(datas).length>0 && datas.hasOwnProperty("err") && datas.err==1?<h5><Alert variant='danger' className='py-4'>Some Error occured</Alert></h5>:null}
+          {err?<h5><Alert variant='danger' className='py-4'>Some Error occured</Alert></h5>:null}
          </Card>
          
         </div>
