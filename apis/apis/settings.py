@@ -53,11 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'htmlmin.middleware.MarkRequestMiddleware',
-    #django.contrib.sessions.middleware.SessionMiddleware
 ]
 
-#SESSION_EXPIRE_AT_BROWSER_CLOSE=False
 
 ROOT_URLCONF = 'apis.urls'
 
@@ -141,3 +138,7 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PASSWORD_RESET_TIMEOUT = 180
+
+
