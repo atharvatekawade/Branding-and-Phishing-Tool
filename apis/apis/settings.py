@@ -16,8 +16,7 @@ print("Base DIR:",BASE_DIR)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['.vercel.app' , '.now.sh']
 
 # Application definition
 
