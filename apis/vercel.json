@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "apis/apis/wsgi.py",
+        "src": "apis/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.11.0" }
       },
@@ -21,7 +21,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "apis/apis/wsgi.py"
+        "dest": "apis/wsgi.py"
       }
     ]
   }
