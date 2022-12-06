@@ -11,23 +11,23 @@ const App = () => {
   return (
     <div>
       <main className="py-3">
-          <Route exact path="/" exact>
+          <Route exact path="/">
             <Home />
           </Route>
   
-          <Route exact path="/monitoring" exact>
+          <Route exact path="/monitoring">
             <Monitoring/>
           </Route>
 
-          <Route exact path="/phishing" exact>
+          <Route exact path="/phishing">
             <Phising/>
           </Route>
 
-          <Route exact path="/similarity" exact>
+          <Route exact path="/similarity">
             <Similarity/>
           </Route>
 
-          <Route exact path="/reporting" exact>
+          <Route exact path="/reporting">
             <Report/>
           </Route>
          
