@@ -1,0 +1,11 @@
+
+main{
+  min-height: 90vh;
+}
+.cursor{
+  cursor: pointer;
+}
+.progress .progress-bar {
+  font-size: 12px;
+  line-height: 8px;
+}
